@@ -1,0 +1,89 @@
+:host {
+    display: block;
+    padding: 20px;
+    
+}
+
+.tax {
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.invoice {
+    color: rgb(44, 178, 255);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.user {
+    display: flex;
+    justify-content: space-between;
+
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 24px;
+    }
+
+    .logo-img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+.print {
+    display: flex;
+    position: fixed;
+    bottom: 12px;
+    right: 16px;
+}
+
+.print-btn {
+    margin-left: 12px;
+}
+
+.margin-bottom {
+    margin-bottom: 16px;
+}
+
+.invoice-details{
+    width: 100%;
+    height: 100%;
+}
+
+p,h5 {
+    margin: 0;
+}
+.payment-status {
+    text-align: end;
+    margin-bottom: 24px;
+    margin-right: 16px;
+    color:  rgb(44, 178, 255);
+}
+
+.mdc-data-table__row:last-child .mat-mdc-cell {
+    border-bottom-color: var(--mat-table-row-item-outline-color, rgba(0, 0, 0, 0.12));
+    border-bottom-width: var(--mat-table-row-item-outline-width, 1px);
+    border-bottom-style: solid;
+}
+
+.upi,.signature {
+    height: 100px;
+}
+
+.signature-title {
+    position: absolute;
+    bottom: 0;
+    font-weight: 600;
+}
+
+.auth-sign {
+    height: 160px;
+}
+
+

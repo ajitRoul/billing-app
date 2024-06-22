@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.color-warn {
+    color: rgb(236, 180, 27);
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.container {
+    padding: 20px;
+ }
+ 
+ .full-width {
+     width: 100%;
+ }
+ 
+ .half-width {
+     width: 48%;
+ }
+ 
+ .right-half {
+     float: inline-end;
+  }
+ 
+ .btn {
+     float: right;
+     margin-top: 24px;
+     button {
+         min-width: 9rem;
+         margin-left: 8px;
+     }
+ }
+
+ .divider {
+    margin-bottom: 16px !important;
+ }
+
+ .spacer {
+    flex: 1 1 auto;
+}
+

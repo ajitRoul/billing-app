@@ -1,0 +1,50 @@
+<form class="container" [formGroup]="customerForm">
+    <section class="header">
+        <h6>Customer Details</h6>
+        <mat-form-field class="half-width search">
+            <input matInput type="text" formControlName="search" placeholder="Search by customer mobile no."   [matAutocomplete]="auto" >
+            <button matSuffix mat-icon-button aria-label="search" (click)="search()">
+                <mat-icon>search</mat-icon>
+            </button>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                @for (option of filteredCustomers; track option.id) {
+                    <mat-option [value]="option.name" (click)="selectItem(option)">{{option.name}}</mat-option>
+                }
+            </mat-autocomplete>
+        </mat-form-field>
+    </section>
+    <mat-divider class="divider"></mat-divider>
+    <mat-form-field class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Enter customer name" type="text" formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="half-width">
+        <mat-label>Phone</mat-label>
+        <input matInput placeholder="Enter customer's phone no." type="tel" formControlName="phone">
+    </mat-form-field>
+
+    <mat-form-field class="half-width right-half">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Enter customer's email." type="email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field class="half-width">
+        <mat-label>GSTIN</mat-label>
+        <input matInput placeholder="Enter customer's GSTIN." type="text" formControlName="GSTIN">
+    </mat-form-field>
+    <mat-form-field class="half-width right-half">
+        <mat-label>Company name</mat-label>
+        <input matInput placeholder="Enter customer's company name." type="text" formControlName="companyName">
+    </mat-form-field>
+
+
+
+    <mat-form-field class="full-width">
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Enter customer's address." type="text" formControlName="address">
+    </mat-form-field>
+
+    <section class="button-group btn">
+        <button mat-stroked-button mat-dialog-close color="accent">Cancel</button>
+        <button mat-flat-button color="primary" [disabled]="!customerForm.valid" (click)="addCustomer()">Add</button>
+    </section>
+</form>

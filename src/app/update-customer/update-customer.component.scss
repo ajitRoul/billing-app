@@ -1,0 +1,37 @@
+.container {
+   padding: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.half-width {
+    width: 48%;
+}
+
+.right-half {
+    float: inline-end;
+ }
+
+.btn {
+    float: right;
+    margin-top: 24px;
+    button {
+        min-width: 9rem;
+        margin-left: 8px;
+    }
+}
+
+.header {
+    margin-top: 20px;
+    
+    h6 {
+        display: inline-block;
+        width: 52%;
+    }
+}
+
+::ng-deep .search .mat-mdc-text-field-wrapper {
+    background-color: transparent !important;
+}

@@ -1,0 +1,17 @@
+
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>person</mat-icon>
+      <span *ngIf="user">
+       {{user.name}}
+      </span>
+    </button>
+    <button mat-menu-item aria-label="button logout" (click)="openUpdateUserDialog(user)">
+      <mat-icon>edit</mat-icon>
+      <span>Update User</span>
+    </button>
+  </mat-menu>
+  

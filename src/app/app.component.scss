@@ -1,0 +1,9 @@
+.toolbar {
+    background: rgb(179, 218, 244);
+}
+
+:host {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}

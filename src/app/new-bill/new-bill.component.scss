@@ -1,0 +1,96 @@
+:host {
+    display: flex;
+    flex: 1;
+    margin: 20px;
+}
+
+.left {
+    width: 50vw !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.right {
+    width: 50vw !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.name {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    display: block;
+    margin-top: 4px;
+}
+
+.vertical-line {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.mat-column-action {
+    width: 116px;
+}
+
+footer mat-toolbar {
+    width: 100%;
+    background: antiquewhite;
+    margin-top: 16px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.half-width {
+    width: 48%;
+}
+
+.right-half {
+   float: inline-end;
+}
+
+.total-amt {
+    color: black !important;
+    font-weight: 600;
+}
+
+.total-amt-label {
+    color: black !important;
+}
+
+.btn {
+    float: right;
+    button {
+        min-width: 9rem;
+        margin-left: 8px;
+    }
+}
+
+.mat-expansion-panel-header-description {
+    justify-content: end;
+}
+
+.bold {
+    font-weight: 500;
+}
+
+.header {
+    margin-top: 20px;
+    
+    h6 {
+        display: inline-block;
+        width: 52%;
+    }
+}
+
+::ng-deep .search .mat-mdc-text-field-wrapper {
+    background-color: transparent !important;
+}

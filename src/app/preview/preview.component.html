@@ -1,0 +1,167 @@
+<aside class="print">
+    <button mat-stroked-button color="accent" (click)="goBack()">Cancel</button>
+    <button mat-flat-button color="accent" class="print-btn" (click)="generateBill()">Print</button>
+</aside>
+<div id="preview">
+    <section class="tax">
+        <div class="invoice">{{invoiceType}}</div>
+        <div>Original For Receipt</div>
+    </section>
+
+    <section class="user margin-bottom">
+        <div class="user-details">
+            <h5 class="uppercase">{{user.companyName}}</h5>
+            <p class="uppercase"><span class="bold">GSTIN: </span> {{user.GSTIN}}</p>
+            <p>
+                <span class="bold">Address: </span>{{user.address}}
+            </p>
+            <p>
+                <span class="bold">Phone: </span>{{user.phone}}
+                <span class="bold"> &nbsp;&nbsp;Email:</span> {{user.email}}
+            </p>
+        </div>
+        <div class="logo">
+            <img *ngIf="user.logoImage" class="logo-img" src="{{user.logoImage}}" alt="logo">
+        </div>
+    </section>
+
+    <mat-grid-list cols="3" rowHeight="30px" >
+        <mat-grid-tile>
+            <div class="invoice-details">
+                <span class="bold">Invoice : </span>
+                {{invoiceId}}
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="invoice-details">
+            <div class="invoice-details">
+                <span class="bold">Invoice Date:</span> {{invoice.invoiceDate| date:'dd/MM/yyyy'}}
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="invoice-details">
+            <div class="invoice-details">
+                <span class="bold">Due Date:</span> {{invoice.billingDate| date:'dd/MM/yyyy'}}
+            </div>
+
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-divider class="margin-bottom"></mat-divider>
+    <mat-grid-list cols="3" rowHeight="100px" class="margin-bottom">
+        <mat-grid-tile>
+            <div class="invoice-details">
+                <p class="bold">Customer Details</p>
+                <p><span class="bold">Name: </span> {{invoice.customer.name}}</p>
+                <p><span class="bold">Phone:</span>{{invoice.customer.phone}}</p>
+                <p *ngIf="invoice.customer.GSTIN"><span class="bold">GSTN: </span>{{invoice.customer.GSTIN}}</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="invoice-details">
+            <div class="invoice-details">
+                <p class="bold">Shipping Address</p>
+                <p> {{invoice.shippingAddress ? invoice.shippingAddress: 'NA'}}</p>
+            </div>
+
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="invoice-details">
+                <p class="bold">Billing Address</p>
+                <p class="bold">{{invoice.billingAddress? invoice.billingAddress : "NA"}}</p>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-divider></mat-divider>
+
+    <table mat-table [dataSource]="invoice.items" class="mat-elevation-z8">
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+            <td mat-footer-cell *matFooterCellDef>Total </td>
+
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Item </th>
+            <td mat-cell *matCellDef="let element">
+                {{element.name}}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+
+        </ng-container>
+
+        <!-- unitPrice Column -->
+        <ng-container matColumnDef="unitPrice">
+            <th mat-header-cell *matHeaderCellDef> Unit Price</th>
+            <td mat-cell *matCellDef="let element"> {{element.unitPrice | currency:'INR'}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+
+        </ng-container>
+
+        <!-- quantity Column -->
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Quantity </th>
+            <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+
+        </ng-container>
+
+
+        <!-- tax Column -->
+        <ng-container matColumnDef="tax">
+            <th mat-header-cell *matHeaderCellDef> Tax Amount </th>
+            <td mat-cell *matCellDef="let element">{{element.taxAmount | currency:'INR'}} ({{element.taxPercentage}}%) </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+
+        </ng-container>
+
+        <!-- total anount -->
+        <ng-container matColumnDef="sellingPrice">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let element"> {{element.sellingPrice | currency:'INR'}} </td>
+            <td mat-footer-cell *matFooterCellDef>{{invoice.totalAmount | currency:'INR'}}</td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns" class="bold"></tr>
+    </table>
+    <mat-divider></mat-divider>
+    <p class="bold" class="payment-status">Payment staus: Paid</p>
+
+    <mat-grid-list cols="3" rowHeight="160px">
+        <mat-grid-tile>
+            <div class="invoice-details">
+                <p class="bold">Pay using UPI</p>
+                <mat-divider class="margin-bottom"></mat-divider>
+                <div class="auth-sign">
+                    <img *ngIf="user.upiQrcode" class="upi" src="{{user.upiQrcode}}" alt="upi">
+                    <p class="signature-title">UPI ID: (ajit.rouljahsdja)</p>
+                </div>
+                
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="invoice-details">
+            <div class="invoice-details">
+                <p class="bold">Bank Details</p>
+                <mat-divider class="margin-bottom"></mat-divider>
+                <p><span class="bold">Bank Name: </span>{{user.bankName ? user.bankName : 'NA'}}</p>
+                <p><span class="bold">Account No.:</span> {{user.accountNo? user.accountNo: 'NA'}}</p>
+                <p><span class="bold">IFSC CODE: </span>{{user.ifscCode?user.ifscCode : 'NA'}}</p>
+                <p><span class="bold">Branch Name: </span>{{user.branchName? user.branchName: 'NA'}}</p>
+            </div>
+
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="invoice-details">
+                <p class="bold">For {{user.companyName}}</p>
+                <mat-divider class="margin-bottom"></mat-divider>
+                <div class="auth-sign">
+                    <img class="signature" *ngIf="user.signImg" src="{{user.signImg}}" alt="signature">
+                    <p class="signature-title">Authorised Signatory</p>
+                </div>
+                
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

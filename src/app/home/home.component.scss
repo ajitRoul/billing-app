@@ -1,0 +1,17 @@
+:host {
+    flex: 1;
+
+    ::ng-deep .search .mat-mdc-text-field-wrapper {
+        background-color: transparent !important;
+    }
+    
+    ::ng-deep .mdc-line-ripple {
+        display: none
+      }
+}
+
+.search {
+    width: 30%;
+    margin-left: 2em;
+}
+

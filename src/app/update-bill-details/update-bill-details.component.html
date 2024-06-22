@@ -1,0 +1,55 @@
+<form class="container" [formGroup]="billForm">
+    <h6>Bill Details</h6>
+    <mat-form-field class="half-width">
+        <mat-label>Bill Number</mat-label>
+        <input matInput placeholder="Enter bill details." type="text" formControlName="billNumber">
+    </mat-form-field>
+
+    <mat-form-field class="half-width right-half">
+        <mat-label>Payment Mode</mat-label>
+        <mat-select formControlName="paymentMode">
+            @for (mode of paymentModes; track mode) {
+              <mat-option [value]="mode">{{mode}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="half-width">
+        <mat-label>Invoice Date</mat-label>
+        <input matInput [matDatepicker]="invoiceDate" Enter invoice date.  formControlName="invoiceDate">
+        <mat-datepicker-toggle matIconSuffix [for]="invoiceDate"></mat-datepicker-toggle>
+        <mat-datepicker #invoiceDate></mat-datepicker>
+    </mat-form-field>
+    
+    <mat-form-field class="half-width right-half">
+        <mat-label>Billing date.</mat-label>
+        <input matInput [matDatepicker]="billingDate" Enter invoice date.  formControlName="billingDate">
+        <mat-datepicker-toggle matIconSuffix [for]="billingDate"></mat-datepicker-toggle>
+        <mat-datepicker #billingDate></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <mat-label>Billing address</mat-label>
+        <input matInput placeholder="Enter billing address." type="text" formControlName="billingAddress">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <mat-label>Shipping address</mat-label>
+        <input matInput placeholder="Enter shipping address." type="text" formControlName="shippingAddress">
+    </mat-form-field>
+    <div class="half-width">
+        <mat-label>Invoice Type</mat-label>
+        <mat-radio-group aria-label="Select invoice type" class="half-width" formControlName="invoiceType">
+            <mat-radio-button value="Tax invoice">Tax invoice</mat-radio-button>
+            <mat-radio-button value="Quotation">Quotation </mat-radio-button>
+            <!-- <mat-radio-button value="both">Both</mat-radio-button> -->
+        </mat-radio-group>
+    </div>
+    <div class="half-width">
+        <p><mat-slide-toggle labelPosition="before"  formControlName="paymentStatus">Payment Status/ Paid &nbsp;&nbsp;</mat-slide-toggle></p>
+    </div>
+    <section class="button-group btn">
+        <button mat-stroked-button mat-dialog-close color="accent">Cancel</button>
+        <button mat-flat-button color="primary" [disabled]="!billForm.valid" (click)="addBillDetails()">Add</button>
+    </section>
+</form>
