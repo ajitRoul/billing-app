@@ -1,13 +1,16 @@
 
-<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" *ngIf="isAuthenticated">
     <mat-icon>account_circle</mat-icon>
   </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+  <mat-menu #menu="matMenu" >
+    <button mat-menu-item >
       <mat-icon>person</mat-icon>
-      <span *ngIf="user">
+      <span *ngIf="(user && isAuthenticated); else defaultName">
        {{user.name}}
       </span>
+      <ng-template #defaultName>
+        Billing Application
+      </ng-template>
     </button>
     <button mat-menu-item aria-label="button logout" (click)="openUpdateUserDialog(user)">
       <mat-icon>edit</mat-icon>

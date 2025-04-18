@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IUser } from '../../models/user';
 import { DbService } from '../db/db.service';
 import { UpdateUserComponent } from '../update-user/update-user.component';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-user-info',
@@ -18,9 +19,11 @@ export class UserInfoComponent {
    
   title = 'Billing System';
   user!: IUser;
-
+  isAuthenticated = false;
+  
   constructor(private readonly dialog: MatDialog,
-    private readonly dbService: DbService
+    private readonly dbService: DbService,
+    private readonly authService: AuthService
   ) {
 
     effect(() => { 
@@ -32,21 +35,19 @@ export class UserInfoComponent {
   }
 
   ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticated();
     this.dbService.getUser().subscribe({
       next: (userArr: IUser[]) => {
         if(userArr.length > 0) {
           this.user = userArr[0];
           USER_SIGNAL.set(this.user);
           this.title = this.user.companyName;
-        } else {
-          this.openUpdateUserDialog();
         }
       },
       error: (error) => {
         console.error('Error fetching user', error);
       }
     });
-    
   }
 
   openUpdateUserDialog(user?: IUser) {
@@ -54,7 +55,7 @@ export class UserInfoComponent {
       data: user,
       hasBackdrop: true,
       disableClose: true,
-      minHeight: '70vh',
+      maxHeight: '90vh',
       minWidth: '80vw',
     });
 

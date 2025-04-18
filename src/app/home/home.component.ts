@@ -38,22 +38,23 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.getAllInvoices();
-    // this.dbService.getAllInvoices().subscribe({
-    //   next: (invoices: IInvoice[]) => {
-    //     this.originalInvoices = JSON.parse(JSON.stringify(invoices));
-    //     this.invoices = invoices;
-    //   },
-    //   error: (error) => {
-    //     console.error('Error fetching invoices', error);
-    //   },
-    // });
+    this.dbService.getUser().subscribe({
+      next: (userArr: IUser[]) => {
+        if (userArr.length <= 0) {
+          this.openUpdateUserDialog();
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching user', error);
+      }
+    });
   }
 
   newBill() {
-    if (this.user) {
+    if (this.user && this.user.phone) {
       // INVOICE_SIGNAL.update(INVOICE_INITIAL_STATE);
+      debugger
       INVOICE_SIGNAL.update((initailState: any) => ({ ...initailState, ...INVOICE_INITIAL_STATE }));
       this.route.navigate(['/newbill']);
     } else {
@@ -77,13 +78,14 @@ export class HomeComponent implements OnInit {
       data: user,
       hasBackdrop: true,
       disableClose: true,
-      minHeight: '70vh',
+      maxHeight: '90vh',
       minWidth: '80vw',
     });
 
     dialogRef.afterClosed().subscribe((result: IUser) => {
       if (result) {
         this.user = result;
+        USER_SIGNAL.set(this.user);
       }
     });
   }
@@ -119,7 +121,7 @@ export class HomeComponent implements OnInit {
   }
 
   searchInvoice() {
-    
+
     if (this.search) {
       this.invoices = this.invoices.filter((invoice: IInvoice) => {
         if (invoice.customer.phone) {
