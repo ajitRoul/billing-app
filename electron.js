@@ -6,7 +6,7 @@ let mainWindow
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    fullscreen:true,
+    fullscreen:false,
     webPreferences: {
       nodeIntegration: true,
       devTools: false
@@ -14,6 +14,7 @@ function createWindow() {
     icon: __dirname + '/app_icon.png'
   })
 
+  mainWindow.setMenu(null);
   mainWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, `/dist/billing/browser/index.html`),
@@ -22,6 +23,7 @@ function createWindow() {
     })
   );
   // Open the DevTools.
+  // Uncomment the line below to open DevTools
   // mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {

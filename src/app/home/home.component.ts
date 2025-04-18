@@ -35,27 +35,30 @@ export class HomeComponent implements OnInit {
       const state = USER_SIGNAL();
       this.user = state;
     });
-    INVOICE_SIGNAL.set(INVOICE_INITIAL_STATE);
   }
 
   ngOnInit(): void {
-    this.dbService.getAllInvoices().subscribe({
-      next: (invoices: IInvoice[]) => {
-        this.originalInvoices = JSON.parse(JSON.stringify(invoices));
-        this.invoices = invoices;
-      },
-      error: (error) => {
-        console.error('Error fetching invoices', error);
-      },
-    });
+
+    this.getAllInvoices();
+    // this.dbService.getAllInvoices().subscribe({
+    //   next: (invoices: IInvoice[]) => {
+    //     this.originalInvoices = JSON.parse(JSON.stringify(invoices));
+    //     this.invoices = invoices;
+    //   },
+    //   error: (error) => {
+    //     console.error('Error fetching invoices', error);
+    //   },
+    // });
   }
 
   newBill() {
     if (this.user) {
+      // INVOICE_SIGNAL.update(INVOICE_INITIAL_STATE);
+      INVOICE_SIGNAL.update((initailState: any) => ({ ...initailState, ...INVOICE_INITIAL_STATE }));
       this.route.navigate(['/newbill']);
     } else {
       const action = this.snackbar.open(
-        'Please update user details to continue',
+        'Please update user details to continue.',
         'Close',
         {
           horizontalPosition: 'center',
@@ -94,14 +97,25 @@ export class HomeComponent implements OnInit {
     if (invoice.id) {
       this.dbService.deleteInvoice(invoice.id).subscribe({
         next: (data) => {
-          this.invoices = this.originalInvoices.filter((inv) => inv.id !== invoice.id);
-          console.log('Invoice deleted successfully');
+          this.getAllInvoices();
         },
         error: (error) => {
           console.error('Error while deleting invoice', error);
         },
       });
     }
+  }
+
+  getAllInvoices() {
+    this.dbService.getAllInvoices().subscribe({
+      next: (invoices: IInvoice[]) => {
+        this.originalInvoices = JSON.parse(JSON.stringify(invoices));
+        this.invoices = invoices;
+      },
+      error: (error) => {
+        console.error('Error fetching invoices', error);
+      },
+    });
   }
 
   searchInvoice() {

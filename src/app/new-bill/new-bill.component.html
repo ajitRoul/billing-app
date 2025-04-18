@@ -1,113 +1,128 @@
 <section class="left">
-   <div>
-    <table mat-table [dataSource]="items" class="mat-elevation-z8" *ngIf="items.length>0; else noBillData">
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
-        </ng-container>
+    <div class="bill-table">
+        <mat-accordion>
+            <mat-expansion-panel [hideToggle]=false expanded="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Bill Details
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-divider></mat-divider>
+                <table mat-table [dataSource]="items" class="mat-elevation-z8" *ngIf="items.length>0; else noBillData">
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+                    </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Item </th>
-            <td mat-cell *matCellDef="let element">
-                {{element.name}}
-            </td>
-        </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Item </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.name}}
+                        </td>
+                    </ng-container>
 
-        <!-- unitPrice Column -->
-        <ng-container matColumnDef="unitPrice">
-            <th mat-header-cell *matHeaderCellDef> Unit Price</th>
-            <td mat-cell *matCellDef="let element"> {{element.unitPrice | currency:"₹"}} </td>
-        </ng-container>
+                    <!-- unitPrice Column -->
+                    <ng-container matColumnDef="unitPrice">
+                        <th mat-header-cell *matHeaderCellDef> Unit Price</th>
+                        <td mat-cell *matCellDef="let element"> {{element.unitPrice | currency:"₹"}} </td>
+                    </ng-container>
 
-        <!-- quantity Column -->
-        <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef> Quantity </th>
-            <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
-        </ng-container>
+                    <!-- quantity Column -->
+                    <ng-container matColumnDef="quantity">
+                        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                        <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+                    </ng-container>
 
 
-        <!-- tax Column -->
-        <ng-container matColumnDef="tax">
-            <th mat-header-cell *matHeaderCellDef> Tax Amount </th>
-            <td mat-cell *matCellDef="let element">{{element.taxAmount | currency:"₹"}} ({{element.taxPercentage}}%) </td>
-        </ng-container>
+                    <!-- tax Column -->
+                    <ng-container matColumnDef="tax">
+                        <th mat-header-cell *matHeaderCellDef> Tax Amount </th>
+                        <td mat-cell *matCellDef="let element">{{element.taxAmount | currency:"₹"}} <br>
+                            IGST: {{element.igstPercentage}}%
+                            <br>
+                            CGST: {{element.cgstPercentage}}%
+                        </td>
+                    </ng-container>
 
-        <!-- total anount -->
-        <ng-container matColumnDef="sellingPrice">
-            <th mat-header-cell *matHeaderCellDef> Amount </th>
-            <td mat-cell *matCellDef="let element"> {{element.sellingPrice | currency:"₹"}} </td>
-        </ng-container>
+                    <!-- total anount -->
+                    <ng-container matColumnDef="sellingPrice">
+                        <th mat-header-cell *matHeaderCellDef> Amount </th>
+                        <td mat-cell *matCellDef="let element"> {{element.sellingPrice | currency:"₹"}} </td>
+                    </ng-container>
 
-        <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element; let i= index;">
-                <button mat-icon-button color="warn" aria-label="edit buttion" (click)="editItem(i)">
-                    <mat-icon>edit</mat-icon>
-                </button>
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element; let i= index;">
+                            <button mat-icon-button color="warn" aria-label="edit buttion" (click)="editItem(i)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
 
-                <button mat-icon-button color="warn" aria-label="Delete button" (click)="removeBill(i)">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </td>
-        </ng-container>
+                            <button mat-icon-button color="warn" aria-label="Delete button" (click)="removeBill(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-   </div>
-   <footer>
-    <mat-accordion>
-        <mat-expansion-panel [hideToggle] = false>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-             Customer Details
-            </mat-panel-title>
-            <mat-panel-description>
-                <button mat-icon-button color="warn" aria-label="update customer button" (click)="updateCustomer($event)">
-                    <mat-icon>edit</mat-icon>
-                </button>
-              </mat-panel-description>
-          </mat-expansion-panel-header>
-          <mat-divider ></mat-divider>
-          <aside *ngIf="customerData;else noCustomerData" aria-label="customer details">
-            <p><span class="bold">Name: </span>{{customerData.name}}</p>
-            <p><span class="bold">Email:</span> {{customerData.email}}</p>
-            <p><span class="bold">Phone: </span>{{customerData.phone}}</p>
-            <p><span class="bold">GSTN: </span>{{customerData.GSTIN}}</p>
-            <p><span class="bold">Company Name: </span>{{customerData.companyName}}</p>
-            <p><span class="bold">Address: </span>{{customerData.address}}</p>
-          </aside>
-        </mat-expansion-panel>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </mat-expansion-panel>
+            <mat-expansion-panel [hideToggle]=false>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Customer Details
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <button mat-icon-button color="warn" aria-label="update customer button"
+                            (click)="updateCustomer($event)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-divider></mat-divider>
+                <aside *ngIf="customerData;else noCustomerData" aria-label="customer details">
+                    <p><span class="bold">Name: </span>{{customerData.name}}</p>
+                    <p><span class="bold">Email:</span> {{customerData.email}}</p>
+                    <p><span class="bold">Phone: </span>{{customerData.phone}}</p>
+                    <p><span class="bold">GSTN: </span>{{customerData.GSTIN}}</p>
+                    <p><span class="bold">Company Name: </span>{{customerData.companyName}}</p>
+                    <p><span class="bold">Address: </span>{{customerData.address}}</p>
+                </aside>
+            </mat-expansion-panel>
 
-        <mat-expansion-panel [hideToggle] = false>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-               Bill Details
-              </mat-panel-title>
-              <mat-panel-description>
-                  <button mat-icon-button color="warn" aria-label="update customer button" (click)="updateBillDetails($event)">
-                      <mat-icon>edit</mat-icon>
-                  </button>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <mat-divider ></mat-divider>
-            <aside *ngIf="billDetails;else noBillDetils" aria-label="bill details">
-              <p><span class="bold">Invoice ID: </span>{{billDetails.id}}</p>
-              <p><span class="bold">Invoice Date: </span>{{billDetails.invoiceDate | date}}</p>
-              <p><span class="bold">Billing Date: </span>{{billDetails.billingDate | date}}</p>
-              <p><span class="bold">Billing status: </span>{{billDetails.paymentStatus ? 'Paid' : 'Not paid'}}</p>
-            </aside>
-          </mat-expansion-panel>
-      </mat-accordion>
-    <mat-toolbar>
-        <span>Total: {{finalAmount | currency:"₹"}}</span>
-        <span class="spacer"></span>
-        <button mat-stroked-button color="accent" (click) ="reset()">Reset</button>
-        <button mat-flat-button color="primary" (click)="confirmBill()">Confirm</button>
-    </mat-toolbar>  
-   </footer>
+            <mat-expansion-panel [hideToggle]=false>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Bill Details
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <button mat-icon-button color="warn" aria-label="update customer button"
+                            (click)="updateBillDetails($event)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-divider></mat-divider>
+                <aside *ngIf="billDetails;else noBillDetils" aria-label="bill details">
+                    <p><span class="bold">Invoice ID: </span>{{billDetails.id}}</p>
+                    <p><span class="bold">Invoice Date: </span>{{billDetails.invoiceDate | date}}</p>
+                    <p><span class="bold">Billing Date: </span>{{billDetails.billingDate | date}}</p>
+                    <p><span class="bold">Billing status: </span>{{billDetails.paymentStatus ? 'Paid' : 'Not paid'}}</p>
+                </aside>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <footer>
+
+        <mat-toolbar>
+            <span>Total: {{finalAmount | currency:"₹"}}</span>
+            <span class="spacer"></span>
+            <button mat-stroked-button color="accent" (click)="reset()">Reset</button>
+            <button mat-flat-button color="primary" (click)="confirmBill()">Confirm</button>
+        </mat-toolbar>
+    </footer>
 </section>
 
 
@@ -117,45 +132,58 @@
         <section class="header">
             <h6 *ngIf="isNew; else editBill">Add new items to invoice</h6>
             <ng-template #editBill>
-                <h6 >Edit Items</h6>
+                <h6>Edit Items</h6>
             </ng-template>
             <mat-form-field class="half-width search">
-                <input matInput type="text" formControlName="search" placeholder="Search items by name."   [matAutocomplete]="auto" >
+                <input matInput type="text" formControlName="search" placeholder="Search items by name."
+                    [matAutocomplete]="auto">
                 <button matSuffix mat-icon-button aria-label="search" (click)="search()">
                     <mat-icon>search</mat-icon>
                 </button>
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                     @for (option of filteredItems; track option.id) {
-                        <mat-option [value]="option.name" (click)="selectItem(option)">{{option.name}}</mat-option>
+                    <mat-option [value]="option.name" (click)="selectItem(option)">{{option.name}}</mat-option>
                     }
                 </mat-autocomplete>
             </mat-form-field>
         </section>
         <mat-divider class="divider"></mat-divider>
-        
+
         <mat-form-field class="full-width">
             <mat-label>Item Name</mat-label>
             <input matInput placeholder="Enter item name" type="text" formControlName="name">
         </mat-form-field>
         <mat-form-field class="half-width">
             <mat-label>Unit price</mat-label>
-            <input matInput placeholder="Enter price per unit" type="number" formControlName="unitPrice" (blur)="updateTotalAmout()">
+            <input matInput placeholder="Enter price per unit" type="number" formControlName="unitPrice"
+                (blur)="updateTotalAmout()">
         </mat-form-field>
         <mat-form-field class="half-width right-half">
             <mat-label>Quantity</mat-label>
-            <input matInput placeholder="Enter no of unit" type="number" formControlName="quantity" (blur)="updateTotalAmout()">
+            <input matInput placeholder="Enter no of unit" type="number" formControlName="quantity"
+                (blur)="updateTotalAmout()">
         </mat-form-field>
         <mat-form-field class="half-width">
-            <mat-label>Tax(%)</mat-label>
-            <input matInput placeholder="Enter tax value(%) i.e 18" type="number" formControlName="taxPercentage" (blur)="updateTotalAmout()">
+            <mat-label>IGST(%)</mat-label>
+            <input matInput placeholder="Enter tax value(%) i.e 18" type="number" formControlName="igstPercentage"
+                (blur)="updateTotalAmout()">
         </mat-form-field>
         <mat-form-field class="half-width right-half">
+            <mat-label>CGST(%)</mat-label>
+            <input matInput placeholder="Enter tax value(%) i.e 18" type="number" formControlName="cgstPercentage"
+                (blur)="updateTotalAmout()">
+        </mat-form-field>
+        <mat-form-field class="full-width">
             <mat-label class="total-amt-label">Total Amount</mat-label>
             <input matInput placeholder="Total amount" class="total-amt" value="0" formControlName="sellingPrice">
         </mat-form-field>
         <section class="button-group btn">
-            <button mat-stroked-button color="warn" (click) ="back()">Back</button>
-            <button mat-stroked-button color="accent" (click) ="resetItemsFrom()">Cancel</button>
+            <!-- <button mat-stroked-button color="warn">
+            </button> -->
+            <a  mat-stroked-button [routerLink]="'/home'">Back</a>
+
+             <!-- Angular handles navigation -->
+            <button mat-stroked-button color="accent" (click)="resetItemsFrom()">Cancel</button>
             <button mat-flat-button color="primary" [disabled]="!billForm.valid" (click)="addBill()">Add</button>
         </section>
     </form>

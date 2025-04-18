@@ -9,6 +9,9 @@ import { IInvoice } from '../../models/invoice';
 import { DbService } from '../db/db.service';
 import { UtilService } from '../shared/util.service';
 import { Router } from '@angular/router';
+import { Rupee } from './rupee';
+
+
 
 @Component({
   selector: 'app-preview',
@@ -22,7 +25,7 @@ export class PreviewComponent implements OnInit {
   invoiceType = 'TAX INVOICE';
   user: IUser = USER_SIGNAL();
   invoiceId = 0;
-
+  rupee = Rupee;
   displayedColumns = [
     'position',
     'name',
@@ -45,9 +48,11 @@ export class PreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('Preview component initialized');
+    console.log(window.location.href);
     const state = INVOICE_SIGNAL();
     this.invoice = state;
-    this.invoiceType =this.invoice.invoiceType;
+    this.invoiceType = this.invoice.invoiceType;
     this.invoiceId = this.invoice.id ? this.invoice.id : this.util.getBillNumber();
   }
 
@@ -55,7 +60,7 @@ export class PreviewComponent implements OnInit {
     this.generatePDF();
     let service = this.dbService.saveInvoice(this.invoice);
     if (this.invoice.id) {
-      this.dbService.updateInvoice(this.invoice);
+      service = this.dbService.updateInvoice(this.invoice);
     }
     service.subscribe({
       next: (data) => {
@@ -69,12 +74,34 @@ export class PreviewComponent implements OnInit {
   }
 
   generatePDF() {
-    const doc = new jsPDF({ unit: 'pt' }); // create jsPDF object
-    const pdfElement = document.getElementById('preview'); // HTML element to be converted to PDF
+    const doc = new jsPDF({ unit: 'pt' }); 
+    const pdfElement = document.getElementById('preview'); 
+    doc.addFont("assets/Roboto-Regular.ttf", "Roboto", "normal");
+    doc.setFont("Roboto");
     if (pdfElement) {
       doc.html(pdfElement, {
         callback: (doc) => {
-          doc.save('bill.pdf');
+          const fileName = `${this.invoiceId || 'bill'}.pdf`;
+          const folderPath = this.user.folderPath || 'C:\Users';
+          const fullPath =  fileName;
+          // Check if running in Electron
+          if (typeof window.require === 'function') {
+            try {
+              this.util.savePDF(doc.output('datauristring'), fullPath, folderPath).then((result) => {
+                if (result) {
+                  console.log('PDF saved successfully');
+                }
+                else {
+                  console.error('Error saving PDF');
+                }
+              });
+            } catch (error) {
+              console.error('Error saving PDF:', error);
+            }
+          } else {
+            doc.save(fullPath);
+          }
+
         },
         margin: [20, 20, 20, 20],
         autoPaging: 'text',

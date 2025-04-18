@@ -41,6 +41,7 @@
     position: fixed;
     bottom: 12px;
     right: 16px;
+    z-index: 9999;
 }
 
 .print-btn {
@@ -86,4 +87,13 @@ p,h5 {
     height: 160px;
 }
 
+.rupee {
+    width: 13px;
+    
+}
+
+.bank-details {
+    position: absolute;
+    bottom: 0;
+}
 

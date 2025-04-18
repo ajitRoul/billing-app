@@ -1,0 +1,31 @@
+<div class="mat-typography" style="display: flex; justify-content: center; align-items: center; height: 90vh;">
+    <mat-card style="width: 400px; padding: 20px;">
+        <mat-card-title style="text-align: center;">Login</mat-card-title>
+        <mat-card-content>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+                    <mat-label>Company Id</mat-label>
+                    <input matInput type="text" formControlName="companyId" required matInput>
+                    <mat-error *ngIf="loginForm.get('companyId')?.invalid && loginForm.get('companyId')?.touched">
+                        Company Id is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+                    <mat-label>Username</mat-label>
+                    <input matInput type="text" formControlName="username" required matInput>
+                    <mat-error *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+                        Username is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 15px;">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password" required matInput>
+                    <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                        Password is required
+                    </mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit" style="width: 100%;" [disabled]="loginForm.invalid">Login</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

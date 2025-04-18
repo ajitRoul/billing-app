@@ -2,6 +2,11 @@
   "name": "billing",
   "version": "0.0.0",
   "main": "electron.js",
+  "author":  {
+    "name": "Ajit",
+    "email": "ajit.roul@gmail.com"
+  },
+  "description": "A simple billing application for small businesses.",
   "scripts": {
     "ng": "ng",
     "start": "electron-forge start",

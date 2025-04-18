@@ -1,4 +1,5 @@
 export interface IUser {
+    folderPath: string;
     name: string;
     email: string;
     phone: string;

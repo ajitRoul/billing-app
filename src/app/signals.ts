@@ -25,6 +25,7 @@ export const USER_INITIAL_STATE: IUser = {
   ifscCode: '',
   branchName: '',
   upiId: '',
+  folderPath: '',
 };
 
 export const CUSTOMER_INITIAL_STATE: ICustomer = {
@@ -47,8 +48,8 @@ export const BILL_DETAILS_INITIAL_STATE: IBillDetails = {
   invoiceType: 'TAX INVOICE',
 };
 
-export const USER_SIGNAL = signal(USER_INITIAL_STATE);
-export const CUSTOMER_SIGNAL = signal(CUSTOMER_INITIAL_STATE);
-export const BILL_DETAILS_SIGNAL = signal(BILL_DETAILS_INITIAL_STATE);
+export const USER_SIGNAL = signal(JSON.parse(JSON.stringify(USER_INITIAL_STATE)));
+export const CUSTOMER_SIGNAL = signal(JSON.parse(JSON.stringify(CUSTOMER_INITIAL_STATE)));
+export const BILL_DETAILS_SIGNAL = signal(JSON.parse(JSON.stringify(BILL_DETAILS_INITIAL_STATE)));
 
-export const INVOICE_SIGNAL = signal(INVOICE_INITIAL_STATE);
+export const INVOICE_SIGNAL = signal(JSON.parse(JSON.stringify(INVOICE_INITIAL_STATE)));

@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IBillItem, IItem } from '../../models/items';
 import { ICustomer } from '../../models/customer';
 import { UpdateCustomerComponent } from '../update-customer/update-customer.component';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { BILL_DETAILS_SIGNAL, CUSTOMER_SIGNAL, INVOICE_SIGNAL, USER_SIGNAL } from '../signals';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { UpdateBillDetailsComponent } from '../update-bill-details/update-bill-details.component';
@@ -23,7 +23,7 @@ import { IInvoice } from '../../models/invoice';
 @Component({
   selector: 'app-new-bill',
   standalone: true,
-  imports: [SharedModule, ReactiveFormsModule, FormsModule, MatSnackBarModule],
+  imports: [SharedModule, ReactiveFormsModule, FormsModule, MatSnackBarModule,RouterModule],
   templateUrl: './new-bill.component.html',
   styleUrl: './new-bill.component.scss',
 })
@@ -70,12 +70,24 @@ export class NewBillComponent implements OnInit {
       name: ['', [Validators.required]],
       unitPrice: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
-      taxPercentage: ['', [Validators.required]],
+      igstPercentage: ['', [Validators.required]],
+      cgstPercentage: ['', [Validators.required]],
       sellingPrice: [{ value: 0, disabled: true }],
       taxAmount: [0],
       search: [''],
     });
+    this.getAllInvoices();
     this.getAllItems();
+
+  }
+
+  getAllInvoices() {
+    const state = INVOICE_SIGNAL();
+    this.customerData = state.customer;
+    debugger
+    this.items = state.items;
+    this.finalAmount = state.totalAmount;
+    this.billDetails = state; 
   }
 
   updateCustomer($event: any) {
@@ -119,10 +131,10 @@ export class NewBillComponent implements OnInit {
   }
 
   updateTotalAmout() {
-    const { unitPrice, quantity, taxPercentage } = this.billForm.value;
+    const { unitPrice, quantity, igstPercentage,cgstPercentage } = this.billForm.value;
     let sellingPrice = 0;
-    if (unitPrice && quantity && taxPercentage) {
-      const taxAmount = (unitPrice * quantity * taxPercentage) / 100;
+    if (unitPrice && quantity && igstPercentage & cgstPercentage) {
+      const taxAmount = (unitPrice * quantity * (igstPercentage+cgstPercentage)) / 100;
       sellingPrice = unitPrice * quantity + taxAmount;
       this.billForm.patchValue({
         taxAmount,
@@ -135,8 +147,8 @@ export class NewBillComponent implements OnInit {
   addBill() {
     if (this.billForm.valid) {
       const bill = this.billForm.value;
-      this.addUpdateItem(this.selectedItem, bill);
       bill.sellingPrice = this.updateTotalAmout();
+      this.addUpdateItem(this.selectedItem, bill);
       this.items.push(bill);
       this.items = JSON.parse(JSON.stringify(this.items));
       this.calculateTotal();
@@ -151,7 +163,8 @@ export class NewBillComponent implements OnInit {
     const formItem = {
       name: bill.name,
       unitPrice: bill.unitPrice,
-      taxPercentage: bill.taxPercentage,
+      igstPercentage: bill.igstPercentage,
+      cgstPercentage: bill.cgstPercentage,
       sellingPrice: bill.sellingPrice,
     };
     let serveice = this.dbService.addItems(formItem);
@@ -198,10 +211,10 @@ export class NewBillComponent implements OnInit {
       this.billDetails
     ) {
       const invoice: IInvoice = {
+        ...this.billDetails,
         customer: this.customerData,
         items: this.items,
         totalAmount: this.finalAmount,
-        ...this.billDetails,
       };
       INVOICE_SIGNAL.update((initailState: any) => ({ ...initailState, ...invoice }));
       this.router.navigate(['/preview']);
@@ -264,11 +277,12 @@ export class NewBillComponent implements OnInit {
     return (
       selectedItem.name === formVal.name &&
       selectedItem.unitPrice === formVal.unitPrice &&
-      selectedItem.taxPercentage === formVal.taxPercentage
+      selectedItem.igstPercentage === formVal.igstPercentage &&
+      selectedItem.cgstPercentage === formVal.cgstPercentage 
     );
   }
 
   back() {
-    this.router.navigate(['']);
+    this.router.navigateByUrl('/home');
   }
 }

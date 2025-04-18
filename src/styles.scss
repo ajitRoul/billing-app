@@ -44,3 +44,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     flex: 1 1 auto;
 }
 
+.custom-loader .mat-mdc-dialog-surface {
+    background-color: transparent;
+}
+
+::ng-deep .custom-loader .mdc-dialog--open .mat-mdc-dialog-surface {
+    transform: none;
+    background: transparent;
+}
+
+.custom-loader {
+    margin-left: 35% !important;
+}

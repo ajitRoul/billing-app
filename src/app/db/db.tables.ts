@@ -44,6 +44,7 @@ export const USER_TABLE_SCHEMA = {
         { name: 'bankName', keypath: 'bankName', options: { unique: true } },
         { name: 'accountNo', keypath: 'accountNo', options: { unique: true } },
         { name: 'ifscCode', keypath: 'ifscCode', options: { unique: true } },
+        { name: 'upiId', keypath: 'upiId', options: { unique: true } },
         { name: 'branchName', keypath: 'branchName', options: { unique: true } },
         { name: 'creationDate', keypath: 'creationDate', options: { unique: false, defaultValue: new Date() } },
         { name: 'lastUpdated', keypath: 'lastUpdated', options: { unique: false,defaultValue: new Date() } },
@@ -57,7 +58,8 @@ export const ITEMS_TABLE_SCHEMA = {
     storeSchema: [
         { name: 'name', keypath: 'name', options: { unique: true } },
         { name: 'unitPrice', keypath: 'unitPrice', options: { unique: false } },
-        { name: 'taxPercentage', keypath: 'taxPercentage', options: { unique: false } },
+        { name: 'igstPercentage', keypath: 'igstPercentage', options: { unique: false } },
+        { name: 'cgstPercentage', keypath: 'cgstPercentage', options: { unique: false } },
         { name: 'creationDate', keypath: 'creationDate', options: { unique: false, defaultValue: new Date() } },
         { name: 'lastUpdated', keypath: 'lastUpdated', options: { unique: false,defaultValue: new Date() } },
         { name: 'isActive', keypath: 'isActive', options: {unique: false, defaultValue: false}}

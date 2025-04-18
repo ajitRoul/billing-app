@@ -6,4 +6,6 @@ export interface IInvoice extends IBillDetails {
   customer: ICustomer;
   items: IBillItem[];
   totalAmount: number;
+  isPaid?: false;
 }
+

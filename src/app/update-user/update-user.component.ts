@@ -60,6 +60,7 @@ export class UpdateUserComponent implements OnInit {
       ifscCode: [this.dialogData?.ifscCode, [Validators.required]],
       branchName: [this.dialogData?.branchName, [Validators.required]],
       upiId: [this.dialogData?.upiId, [Validators.required]],
+      folderPath: [this.dialogData?.folderPath, [Validators.required]],
     });
   }
 
@@ -107,4 +108,6 @@ export class UpdateUserComponent implements OnInit {
       };
     }
   }
+
+  
 }

@@ -37,32 +37,48 @@
     </mat-form-field>
 
     <mat-form-field class="half-width right-half">
-        <mat-label>IFSC Code</mat-label>
-        <input matInput placeholder="Enter IFSC Code." type="text" formControlName="ifscCode">
+
+        <mat-label>Branch Name</mat-label>
+        <input matInput placeholder="Enter Bank name" type="text" formControlName="branchName">
+
     </mat-form-field>
 
     <mat-form-field class="half-width">
-        <mat-label>UPI ID</mat-label>
-        <input matInput placeholder="Enter account no." type="text" formControlName="upiId">
+        <mat-label>IFSC Code</mat-label>
+        <input matInput placeholder="Enter IFSC Code." type="text" formControlName="ifscCode">
+
     </mat-form-field>
 
+    <mat-form-field class="half-width right-half">
+        <mat-label>UPI ID</mat-label>
+        <input matInput placeholder="Enter account no." type="text" formControlName="upiId">
+
+    </mat-form-field>
+
+
     <div class="half-width right-half">
+
         <mat-label>Upload UPI QR Code Image(W:100px,H:100px)</mat-label>
         <br>
-        <input hidden placeholder="Upload QR code image" type="file" #qrCode (change) ="fileSelect($event,'upiQrcode')">
+        <input hidden placeholder="Upload QR code image" type="file" #qrCode (change)="fileSelect($event,'upiQrcode')">
         <button type="button" mat-stroked-button color="primary" (click)="qrCode.click()">Choose QR Code image</button>
         <span class="file-name"> &nbsp;&nbsp;&nbsp;{{upiQrcode.name}}</span>
     </div>
-    <mat-form-field class="full-width">
+    <mat-form-field class="half-width">
+        <mat-label>Bill folder location</mat-label>
+        <input matInput placeholder="Please enter folder path" type="text" formControlName="folderPath">
+
+    </mat-form-field>
+    <!-- <mat-form-field class="full-width">
         <mat-label>Branch Name</mat-label>
         <input matInput placeholder="Enter Bank name" type="text" formControlName="branchName">
-    </mat-form-field>
-   
+    </mat-form-field> -->
+
 
     <div class="half-width">
         <mat-label> Upload Logo Image</mat-label>
         <br>
-        <input hidden placeholder="Upload logo image" (change) ="fileSelect($event,'logoImage')" type="file" #logoImg>
+        <input hidden placeholder="Upload logo image" (change)="fileSelect($event,'logoImage')" type="file" #logoImg>
         <button type="button" mat-stroked-button color="primary" (click)="logoImg.click()">Choose
             Logo image</button>
         <span class="file-name"> &nbsp;&nbsp;&nbsp;{{logoImage.name}}</span>
@@ -70,11 +86,13 @@
     <div class="half-width right-half">
         <mat-label>Upload Signature image</mat-label>
         <br>
-        <input hidden placeholder="Upload signature image." type="file"  (change) ="fileSelect($event,'signImg')" type="file"  #signImage>
-        <button type="button" mat-stroked-button color="primary" (click)="signImage.click()">Choose Signature image</button>
+        <input hidden placeholder="Upload signature image." type="file" (change)="fileSelect($event,'signImg')"
+            type="file" #signImage>
+        <button type="button" mat-stroked-button color="primary" (click)="signImage.click()">Choose Signature
+            image</button>
         <span class="file-name"> &nbsp;&nbsp;&nbsp;{{signImg.name}}</span>
     </div>
-    
+
     <section class="button-group btn">
         <button mat-stroked-button color="accent" mat-dialog-close>Cancel</button>
         <button mat-flat-button color="primary" [disabled]="!userForm.valid" (click)="addCustomer()">Add</button>
