@@ -54,7 +54,6 @@ export class HomeComponent implements OnInit {
   newBill() {
     if (this.user && this.user.phone) {
       // INVOICE_SIGNAL.update(INVOICE_INITIAL_STATE);
-      debugger
       INVOICE_SIGNAL.update((initailState: any) => ({ ...initailState, ...INVOICE_INITIAL_STATE }));
       this.route.navigate(['/newbill']);
     } else {

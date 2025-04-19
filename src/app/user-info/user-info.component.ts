@@ -6,6 +6,7 @@ import { IUser } from '../../models/user';
 import { DbService } from '../db/db.service';
 import { UpdateUserComponent } from '../update-user/update-user.component';
 import { AuthService } from '../shared/auth.service';
+import { HelpLineComponent } from '../help-line/help-line.component';
 
 @Component({
   selector: 'app-user-info',
@@ -36,6 +37,11 @@ export class UserInfoComponent {
 
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
+    this.authService.isAuthenticated$.subscribe({
+      next: (value) => {
+        this.isAuthenticated = value;
+      }
+    })
     this.dbService.getUser().subscribe({
       next: (userArr: IUser[]) => {
         if(userArr.length > 0) {
@@ -64,6 +70,16 @@ export class UserInfoComponent {
         this.user = result;
         this.title = result.companyName
       }
+    });
+  }
+
+  contact(user?: IUser) {
+    const dialogRef = this.dialog.open(HelpLineComponent, {
+      data: user,
+      hasBackdrop: true,
+      disableClose: true,
+      maxHeight: '90vh',
+      minWidth: '80vw',
     });
   }
 
