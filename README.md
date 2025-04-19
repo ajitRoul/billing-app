@@ -1,6 +1,7 @@
 # Billing
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.2.
+This billing application sounds like a handy tool for small businesses navigating GST! It effortlessly generating professional-looking GST bills in PDF format, complete with your company name.
+The application keeps a neat record of everyone you do business with, along with all the past invoices. And the best part? You can easily pull up any old bill for reprinting or make necessary updates, giving you more control and saving you valuable time on administrative tasks.
 
 ## Development server
 
