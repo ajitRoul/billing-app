@@ -34,9 +34,9 @@ export class UpdateBillDetailsComponent implements OnInit{
   ngOnInit(): void {
     const state = CUSTOMER_SIGNAL();
     this.customerData = state;
-    console.log(this.customerData);
+    debugger
     this.billForm = this.formBuilder.group({
-      billNumber: [{value: this.billDetails?.id?this.billDetails?.id : this.util.getBillNumber(), disabled: true},[Validators.required]],
+      billNumber: [this.billDetails?.billNumber?this.billDetails?.billNumber :"" ,[Validators.required]],
       invoiceDate: [this.billDetails?.invoiceDate? this.billDetails?.invoiceDate : new Date(),[Validators.required]],
       billingDate: [this.billDetails?.billingDate? this.billDetails?.billingDate : new Date(),[Validators.required]],
       paymentMode: this.billDetails?.paymentMode? this.billDetails?.paymentMode : 'Cash',
@@ -50,9 +50,7 @@ export class UpdateBillDetailsComponent implements OnInit{
 
   addBillDetails() {
     if(this.billForm.valid) {
-      const billNumber = this.util.getBillNumber();
       const billDetails = this.billForm.value;
-      billDetails.billNumber = billNumber;
       this.dialogRef.close(billDetails);
     }
   }

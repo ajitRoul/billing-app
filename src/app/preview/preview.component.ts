@@ -24,7 +24,7 @@ export class PreviewComponent implements OnInit {
   invoice!: IInvoice;
   invoiceType = 'TAX INVOICE';
   user: IUser = USER_SIGNAL();
-  invoiceId = 0;
+  invoiceId :any = '';
   rupee = Rupee;
   displayedColumns = [
     'position',
@@ -48,12 +48,11 @@ export class PreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Preview component initialized');
-    console.log(window.location.href);
     const state = INVOICE_SIGNAL();
     this.invoice = state;
     this.invoiceType = this.invoice.invoiceType;
-    this.invoiceId = this.invoice.id ? this.invoice.id : this.util.getBillNumber();
+    debugger
+    this.invoiceId = this.invoice.id ? this.invoice.id : "";
   }
 
   generateBill() {
@@ -81,7 +80,7 @@ export class PreviewComponent implements OnInit {
     if (pdfElement) {
       doc.html(pdfElement, {
         callback: (doc) => {
-          const fileName = `${this.invoiceId || 'bill'}.pdf`;
+          const fileName = `${this.invoice.billNumber || 'bill'}.pdf`;
           const folderPath = this.user.folderPath || 'C:\Users';
           const fullPath =  fileName;
           // Check if running in Electron

@@ -75,6 +75,7 @@ export class NewBillComponent implements OnInit {
       sellingPrice: [{ value: 0, disabled: true }],
       taxAmount: [0],
       search: [''],
+      description: [''],
     });
     this.getAllInvoices();
     this.getAllItems();
@@ -84,7 +85,6 @@ export class NewBillComponent implements OnInit {
   getAllInvoices() {
     const state = INVOICE_SIGNAL();
     this.customerData = state.customer;
-    debugger
     this.items = state.items;
     this.finalAmount = state.totalAmount;
     this.billDetails = state; 
@@ -166,6 +166,7 @@ export class NewBillComponent implements OnInit {
       igstPercentage: bill.igstPercentage,
       cgstPercentage: bill.cgstPercentage,
       sellingPrice: bill.sellingPrice,
+      description: bill.description,
     };
     let serveice = this.dbService.addItems(formItem);
     if (selectedItem.id) {
@@ -174,6 +175,7 @@ export class NewBillComponent implements OnInit {
     }
     serveice.subscribe({
       next: (result) => {
+        this.getAllItems();
         console.log('Item added successfully', result);
       },
       error: (error) => {

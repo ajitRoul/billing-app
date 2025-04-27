@@ -4,7 +4,7 @@ export interface IItem {
     igstPercentage: number;
     cgstPercentage: number;
     sellingPrice: number;
-    id?: number;
+    id?: string;
 }
 
 export interface IBillItem extends IItem{

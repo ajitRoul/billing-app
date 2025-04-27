@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
     this.getAllInvoices();
     this.dbService.getUser().subscribe({
       next: (userArr: IUser[]) => {
+
         if (userArr.length <= 0) {
           this.openUpdateUserDialog();
         }
@@ -54,7 +55,7 @@ export class HomeComponent implements OnInit {
   newBill() {
     if (this.user && this.user.phone) {
       // INVOICE_SIGNAL.update(INVOICE_INITIAL_STATE);
-      INVOICE_SIGNAL.update((initailState: any) => ({ ...initailState, ...INVOICE_INITIAL_STATE }));
+      INVOICE_SIGNAL.update((initailState: any) => ({ ...INVOICE_INITIAL_STATE }));
       this.route.navigate(['/newbill']);
     } else {
       const action = this.snackbar.open(
@@ -110,6 +111,7 @@ export class HomeComponent implements OnInit {
   getAllInvoices() {
     this.dbService.getAllInvoices().subscribe({
       next: (invoices: IInvoice[]) => {
+        debugger
         this.originalInvoices = JSON.parse(JSON.stringify(invoices));
         this.invoices = invoices;
       },

@@ -46,6 +46,7 @@ export const BILL_DETAILS_INITIAL_STATE: IBillDetails = {
   shippingAddress: '',
   discount: 0,
   invoiceType: 'TAX INVOICE',
+  billNumber: '',
 };
 
 export const USER_SIGNAL = signal(JSON.parse(JSON.stringify(USER_INITIAL_STATE)));

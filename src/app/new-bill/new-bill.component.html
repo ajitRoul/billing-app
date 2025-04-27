@@ -20,6 +20,8 @@
                         <th mat-header-cell *matHeaderCellDef> Item </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.name}}
+                            <br>
+                            <span class="description"> {{element.description}} </span>
                         </td>
                     </ng-container>
 
@@ -106,7 +108,7 @@
                 </mat-expansion-panel-header>
                 <mat-divider></mat-divider>
                 <aside *ngIf="billDetails;else noBillDetils" aria-label="bill details">
-                    <p><span class="bold">Invoice ID: </span>{{billDetails.id}}</p>
+                    <p><span class="bold">Invoice ID: </span>{{billDetails.billNumber}}</p>
                     <p><span class="bold">Invoice Date: </span>{{billDetails.invoiceDate | date}}</p>
                     <p><span class="bold">Billing Date: </span>{{billDetails.billingDate | date}}</p>
                     <p><span class="bold">Billing status: </span>{{billDetails.paymentStatus ? 'Paid' : 'Not paid'}}</p>
@@ -152,6 +154,10 @@
         <mat-form-field class="full-width">
             <mat-label>Item Name</mat-label>
             <input matInput placeholder="Enter item name" type="text" formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Enter description of product" type="text" formControlName="description"></textarea>
         </mat-form-field>
         <mat-form-field class="half-width">
             <mat-label>Unit price</mat-label>

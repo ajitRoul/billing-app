@@ -62,7 +62,8 @@ export const ITEMS_TABLE_SCHEMA = {
         { name: 'cgstPercentage', keypath: 'cgstPercentage', options: { unique: false } },
         { name: 'creationDate', keypath: 'creationDate', options: { unique: false, defaultValue: new Date() } },
         { name: 'lastUpdated', keypath: 'lastUpdated', options: { unique: false,defaultValue: new Date() } },
-        { name: 'isActive', keypath: 'isActive', options: {unique: false, defaultValue: false}}
+        { name: 'isActive', keypath: 'isActive', options: {unique: false, defaultValue: false}},
+        { name: 'description', keypath: 'description', options: { unique: false } }
     ]
 }
 

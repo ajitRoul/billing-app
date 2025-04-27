@@ -79,7 +79,7 @@ export class DbService {
   getAllInvoices(): Observable<IInvoice[]> {
     return this.dbService.getAll(BILL_TABLE_SCHEMA.store);
   }
-  deleteInvoice(invoiceId: number): Observable<any> {
+  deleteInvoice(invoiceId: string): Observable<any> {
     return this.dbService.delete(BILL_TABLE_SCHEMA.store, invoiceId);
   }
 

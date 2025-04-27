@@ -83,4 +83,10 @@ export class UserInfoComponent {
     });
   }
 
+  logout() {
+    window.localStorage.removeItem('user');
+    USER_SIGNAL.set(null);
+    this.authService.logout();
+  }
+
 }

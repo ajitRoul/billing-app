@@ -29,7 +29,7 @@
         <mat-grid-tile>
             <div class="invoice-details">
                 <span class="bold">Invoice : </span>
-                {{invoiceId}}
+                {{invoice.billNumber}}
             </div>
         </mat-grid-tile>
         <mat-grid-tile class="invoice-details">
@@ -41,7 +41,6 @@
             <div class="invoice-details">
                 <span class="bold">Due Date:</span> {{invoice.billingDate| date:'dd/MM/yyyy'}}
             </div>
-
         </mat-grid-tile>
     </mat-grid-list>
     <mat-divider class="margin-bottom"></mat-divider>
@@ -84,6 +83,8 @@
             <th mat-header-cell *matHeaderCellDef> Item </th>
             <td mat-cell *matCellDef="let element">
                 {{element.name}}
+                <br>
+                <span class="bold">{{element.description}}</span>
             </td>
             <td mat-footer-cell *matFooterCellDef></td>
 
